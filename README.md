@@ -12,3 +12,7 @@ Gamma_eval.py: Excecutes data generation for a set level of informative coavaria
 Missingness_Plots.py: Excecutes data generation for a set level of informative coavariates, deletes edges completely at random, and gages the robustness of the nodal positions in the recomended layout from our algorithm. 
 
 Plot_positions.py: Excecutes data generation for a set level of informative coavariates, runs our algorithm, and stoes the plotting coordinates to be transfered to R.
+
+plotting_code.R: This code visulaizes are simulated and empirical data. 
+
+procrustes_plots.R: This script creates our plots gaging the robustness of our nodal positions. 
