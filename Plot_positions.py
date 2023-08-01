@@ -7,7 +7,6 @@ import Base_functions
 import torch
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
-#import math
 import numpy as np
 import random as random
 import numpy.linalg as np_math
@@ -28,18 +27,7 @@ import os
 # In[ ]:
 
 
-# In[ ]:
-#itera = int(sys.argv[1]) # iteration for parameter set
-#p_in_i = float(sys.argv[2]) # percent increase
-#p_out_i = float(sys.argv[3]) # expected edges per node
-#num_groups = int(sys.argv[4])
-#total_nodes = int(sys.argv[5])
-#cat_cont = int(sys.argv[6]) # 1 catagorical, # 2 continuous
-#gamma = float(sys.argv[7])
-
-
 os.chdir('/home/ot25/Research/JP/Covariate_Smoothing/Results/Plot_Data/Raw')
-#data = pd.read_csv('plotting_data.csv')
 data = pd.read_csv('plotting_data_AddH.csv')
 
 for i in range(data.shape[0]):
@@ -55,18 +43,6 @@ for i in range(data.shape[0]):
 
 
     # In[3]:
-
-
-    #p_in_i = .5
-    #p_out_i = 5
-    #itera = 1
-    #p_out = 0.05
-    #p_in = 0.2
-    #cat_cont = 2
-    #total_nodes = 100
-    #gamma = 0.1
-    #num_groups = 2
-    #group_size = 1
 
 
     # In[5]:
