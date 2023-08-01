@@ -57,9 +57,7 @@ def B_function(A, X, cat_cont):
             xsq_f = np.column_stack((abs(X[i] - X[j]))).reshape(-1, 1)
         elif(cat_cont == 4):
             xsq_f = np.column_stack(((X[i, 0] == X[j, 0]), (X[i, 1] == X[j, 1]), (X[i, 2] == X[j, 2]), (X[i, 3] == X[j, 3])))
-            #xsq_f = np.column_stack(((X[i, 2] != X[j, 2]), (X[i, 3] != X[j, 3])))
         elif(cat_cont == 5):
-                #xsq_f = np.column_stack(((X[i, 0] == X[j, 0]), (X[i, 1] == X[j, 1])))
                 xsq_f = np.column_stack((X[i, 3] == X[j, 3])).reshape(-1, 1)
         elif(cat_cont == 6):
             xsq_f = np.column_stack((X[i, 0] == X[j, 0])).reshape(-1, 1)
