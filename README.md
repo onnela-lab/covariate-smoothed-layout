@@ -24,3 +24,51 @@ gamma_eval.R: This script creates the Gamma_eval.py plots where we see the visua
 plotting_code.R: This code visulaizes are simulated and empirical data. 
 
 procrustes_plots.R: This script creates our plots gaging the robustness of our nodal positions. 
+
+
+## Usage
+Below is a basic example of how to run our algorithm on network with continuous nodal covariates, informative covariates (p_in_i = 1.5), average nodal degree of 5, 100 nodes, and gamma value of 0.5.
+
+1. Import the necessary packages/files.
+   
+    ```
+    import Base_functions
+    import torch
+    import matplotlib.pyplot as plt
+    import matplotlib.ticker as ticker
+    import numpy as np
+    import random as random
+    import numpy.linalg as np_math
+    import networkx as nx
+    import sklearn
+    from sklearn.linear_model import LogisticRegression
+    import seaborn as sns
+    import seaborn as sns
+    import pandas as pd 
+    import statsmodels.api as sm
+    from scipy import stats
+    from scipy.special import expit, logit
+    from scipy.special import comb
+    import sys
+    ```
+
+3. Generate Data
+
+   ```
+   G, X, B_true = Base_functions.Data_generator(num_groups = 0,
+                              p_in_i = 1.5, p_out_i = 5, total_nodes = 100, cat_cont = 2)
+   ```
+   
+5. Run algorithm
+
+   ```
+   G, res, X_colors, node_dis, B, Q, positions = Base_functions.Vertex_Positions(G, step_size = 0.1, thresh = 0.000001, X = X, 
+                                                  gamma = 0.5, B_true = B_true, cat_cont = 2)
+   ```
+
+7. Plot graph using the exported/configured positions.
+
+   ```
+   nx.draw(G, pos = res, with_labels = False, node_color = X_colors, ax = None, cmap=plt.cm.Reds)
+   ```
+
