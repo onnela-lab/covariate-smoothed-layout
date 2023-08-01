@@ -1,6 +1,6 @@
 # covariate-smoothed-layout
 
-This code constructs plotting visuals, using a smoothing algorithm, incorporating edge information located within covaraites. Varying levels of information within the covaraites are explored, as well as covariate data types and network structers, and an added layer of robustness of nodal positions is investigated. 
+This code constructs plotting visuals, using a smoothing algorithm, incorporating edge information located within covaraites. Varying levels of information within the covaraites are explored, as well as covariate data types and network structures, and an added layer of robustness of nodal positions is investigated. 
 
 # File Overview
 
