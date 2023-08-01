@@ -3,7 +3,6 @@
 import torch
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
-#import math
 import numpy as np
 import random as random
 import numpy.linalg as np_math
@@ -23,43 +22,22 @@ from sklearn.preprocessing import LabelEncoder
 import sys
 import os
 
-# In[ ]:
-
-# Turn Q into a funciton
-# inputs:
-    # Adjancey matrix
-    # poistions
-    # alpha
-    # k
     
 def Q_eval(A, positions, alpha, k, B, gamma): # k is no longer needed here
-    # "None" inserts another dimention of size one
-    # If the dimension of your matricies match, itll automatically do the algebra for you
-        # If one dimension is 1, itll duplicate the entry to the number of other dimention  
     sqdist = torch.tril((positions[:, None, :] - positions[None, :, :]).square().sum(axis=-1))
     i, j = np.tril_indices(sqdist.size(0), k=-1)
     sqdist_nozero = sqdist[i, j]
     repulsive = 0
     attractive1 = 0
-    #1 / (dist + th.eye(num_nodes)) - th.eye(num_nodes)
-    #for i in range(1, positions.shape[0]):
-    #    for j in range(i):
-    #        repulsive = repulsive + alpha/sqdist[i,j].sqrt()
-            
+    
     # modifying diagnoal because of sqrt(0) derivative
-    # Adding a constant does nothting to energy so we dont substract it back off
-    #repulsive = alpha/(sqdist + torch.eye(positions.shape[0])).sqrt().mean()
     repulsive = (alpha/sqdist_nozero.sqrt()).mean()
-    #attractive = (torch.mul(A, sqdist)*k).mean() # divide by 2 or n for repeats
     attractive = torch.mul(((1 - gamma)*A + gamma*B), sqdist).mean()
-    #print(attractive, repulsive)
         
     Q = attractive + repulsive
     return Q
 
 def B_function(A, X, cat_cont):
-    # cat_cont: 1 for categorical, 2 for continuous
-    
     # Determining lower diagonal indicies
     i, j = np.tril_indices(A.size(0), k=-1)
     
@@ -67,10 +45,7 @@ def B_function(A, X, cat_cont):
     ## outcome
     A_o = torch.flatten(A[i, j])
     
-    #print(A_o.size())
-    
     ## feature
-    #X = torch.tensor(X)
     X = torch.from_numpy(X)
     
     
@@ -90,7 +65,6 @@ def B_function(A, X, cat_cont):
             xsq_f = np.column_stack((X[i, 0] == X[j, 0])).reshape(-1, 1)
             
         # Logistic Regression
-        #print(A_o.numpy().ravel().shape)
         if all(x == A_o[0] for x in A_o):
             B_matrix = np.zeros((A.size(0), A.size(0)))
         else:
@@ -108,10 +82,6 @@ def B_function(A, X, cat_cont):
 
             model_sm = sm.Logit(A_o.numpy().ravel(), X_t)
             result = model_sm.fit(tol=1e-1)
-
-
-            #print(model.intercept_[0], model.coef_)
-            print(result.summary())
 
             # Builing B matrix 
             B_matrix = np.zeros((A.size(0), A.size(0)))
@@ -149,11 +119,6 @@ def B_function(A, X, cat_cont):
 
             # Zero the gradients
             optimizer.zero_grad()
-            
-
-        # Print the final values of x and y
-        #print("theta = ", theta.item())
-        #print("tao = ", tao.item())
         
         X = X.detach().numpy()
         theta = theta.item()
@@ -168,11 +133,6 @@ def B_function(A, X, cat_cont):
      
 def Vertex_Positions(G, step_size, thresh, X, gamma, B_true, cat_cont):
     # Initial graph
-    #G = nx.erdos_renyi_graph(n, 0.6, seed=False, directed=False)
-    #G = nx.planted_partition_graph(2, int(n/2), 0.7, 0.1)
-    #G = nx.karate_club_graph()
-    #n = G.number_of_nodes()
-    #G = nx.complete_graph(n)
     for iteration in range(1):
         A = torch.tensor(nx.to_scipy_sparse_array(G).todense())
     
@@ -187,42 +147,28 @@ def Vertex_Positions(G, step_size, thresh, X, gamma, B_true, cat_cont):
             B = B_true
 
         positions = torch.rand(A.shape[0], 2, requires_grad=True)
-        #positions_scale = (1 - -1)*positions + -1
     
         # Optimizer
         optimizer = torch.optim.Adam([positions], lr=step_size)
     
         track = []
-        #thresh_i = [9999]
         x = 1000
-        #positions_past = torch.clone(positions)
         while x > thresh:
         #for k in range(500):
-            #print(x)
             # Compute Energy
             Q = Q_eval(A, positions, alpha, k, B, gamma)
-            #print(Q.detach())
             track.append(Q.detach())
         
             # Back Propogation
             optimizer.zero_grad()
             Q.backward()
             optimizer.step()
-            #thresh_i.append((positions - positions_past).square().sum().sqrt())
-            #positions_past = torch.clone(positions)
-            #thresh_diff = abs(thresh_i[-2:][0] - thresh_i[-2:][1])
-            #print(thresh_diff)
             if len(track) > 2:
                 x = abs(track[-2:][0] - track[-2:][1])
         
     
         positions = positions.detach().numpy()
         # Scaling node positions
-        #positions[:, 0] = positions[:, 0] - np.mean(positions[:, 0])
-        #positions[:, 0] = positions[:, 0] / np.linalg.norm(positions[:, 0])
-       
-        #positions[:, 1] = positions[:, 1] - np.mean(positions[:, 1])
-        #positions[:, 1] = positions[:, 1] / np.linalg.norm(positions[:, 1])
         
         X_std = (positions[:, 0] - positions[:, 0].min()) / (positions[:, 0].max() - positions[:, 0].min())
         positions[:, 0] = X_std * (0.9 - -0.9) + -0.9
@@ -232,11 +178,7 @@ def Vertex_Positions(G, step_size, thresh, X, gamma, B_true, cat_cont):
     
         res = dict(zip(G.nodes(), positions))
         node_dis = np.tril(np.sqrt(np.square((positions[:, None, :] - positions[None, :, :])).sum(axis=-1)), -1)
-        #node_dis = np.tril(np.square((positions[:, None, :] - positions[None, :, :])).sum(axis=-1), -1)
         
-        #print(positions)
-        #print(node_dis)
-        #print(res)
         # Node Colors
         X_colors = []
         if(cat_cont == 1):
@@ -262,16 +204,6 @@ def Vertex_Positions(G, step_size, thresh, X, gamma, B_true, cat_cont):
             carac=carac.reindex(G.nodes())
             X_colors = carac['myvalue'].astype(float)
             
-        #plt.figure(1)
-        #nx.draw(G, pos = nx.fruchterman_reingold_layout(G))
-        #plt.figure(iteration + 1)
-        #nx.draw(G, pos = res, with_labels = True, node_color = X_colors)
-        #plt.figure(2)
-        #plt.plot(track)
-        
-    
-
-    #plt.show()
     return G, res, X_colors, node_dis, B, Q.detach().numpy(), positions
 
 
@@ -298,44 +230,8 @@ def Locate_gamma(data, gammas, metric):
     for gam in gammas:
         data_gam = data[data[:, 0] == gam, 2]
         y.append(np.median(data_gam))
-    #print(model.pvalues[1])
-    #print(model.params[1])
-    return(round(gammas[np.array(y).argmin()], 4))
-    
-    # If there is no significant negative linear relationship in the data
-    # select gamma = 0. Else, select based on desired metric
-    if(model.pvalues[1] < 0.05):
-        if(model.params[1] < 0):
-            
-            # If gamma smoothing surpases 90% of total smoothing return gamma
-            # else return 1 for maximum smoothing
-            if(metric == 1):
-                total_smoothing = abs(y[0] - y[-1])
-                for i in range(len(y)) :
-                    gam_smoothing = abs(y[0] - y[i])/total_smoothing
-                    if(gam_smoothing > .9):
-                        return round(gammas[i], 4)
-                return 1
-            elif(metric == 2):
-                # Finding gamma as minimum of convex fucntion of smoothing and edge increase
-                y = []
-                for gam in gammas:
-                    data_gam = data[data[:, 0] == gam, 2]
-                    y.append(np.median(data_gam))
-                    
-                return(round(gammas[np.array(y).argmin()], 4))
-                  
-        else:
-            return 0
-    else:
-        return 0
         
-    
-    
-      
-
-
-# In[ ]:
+    return(round(gammas[np.array(y).argmin()], 4))
 
 
 # Graph and covariate construction
@@ -396,17 +292,14 @@ def Data_generator(num_groups, p_in_i, p_out_i, total_nodes, cat_cont):
         G = nx.empty_graph(total_nodes)
 
         #random.seed(10)
-        #X = np.round(np.sort(np.random.uniform(low=LB, high=UB, size=total_nodes)))
         X = np.sort(np.random.uniform(low=0, high=1, size=total_nodes))
         X = X.reshape(-1, 1)
         random.seed(10)
         B_true = np.zeros((total_nodes, total_nodes))
         for i in range(1, total_nodes):
             for j in range(0, i):
-                #p_ij = expit(-1.8 + -0.05*abs(X[i] - X[j]))
                 p_ij = expit(B_0 + B_1*abs(X[i] - X[j]))
                 B_true[i, j] = p_ij
-                #print(p_ij)
 
                 if np.random.uniform(low = 0, high = 1, size = 1) < p_ij:
                     G.add_edge(i, j)
@@ -415,7 +308,6 @@ def Data_generator(num_groups, p_in_i, p_out_i, total_nodes, cat_cont):
         # edge probabilities and group size for continuous data using MLE
         tao = p_in_i + 0.01
         theta = (p_out_i * np.sqrt(1 + 2*tao**2)) / (total_nodes - 1) # averge degree is p_out_i
-        #print(theta)
         
         G = nx.empty_graph(total_nodes)
         random.seed(10)
@@ -437,7 +329,6 @@ def Data_generator(num_groups, p_in_i, p_out_i, total_nodes, cat_cont):
         
         # read in the XML file as a networkx graph
         G = nx.read_graphml("/home/ot25/Research/JP/Covariate_Smoothing/Data/community_04.xml")
-        #G = nx.read_graphml("/Users/octavioustalbot/Desktop/PyTorch/R/Data/Add_Data/community_04.xml")
 
         # force the graph to be undirected
         G = G.to_undirected()
