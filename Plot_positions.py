@@ -1,0 +1,142 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+import Base_functions
+import torch
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+#import math
+import numpy as np
+import random as random
+import numpy.linalg as np_math
+import networkx as nx
+import sklearn
+from sklearn.linear_model import LogisticRegression
+import seaborn as sns
+import seaborn as sns
+import pandas as pd 
+import statsmodels.api as sm
+from scipy import stats
+from scipy.special import expit, logit
+import sys
+import os
+
+
+
+# In[ ]:
+
+
+# In[ ]:
+#itera = int(sys.argv[1]) # iteration for parameter set
+#p_in_i = float(sys.argv[2]) # percent increase
+#p_out_i = float(sys.argv[3]) # expected edges per node
+#num_groups = int(sys.argv[4])
+#total_nodes = int(sys.argv[5])
+#cat_cont = int(sys.argv[6]) # 1 catagorical, # 2 continuous
+#gamma = float(sys.argv[7])
+
+
+os.chdir('/home/ot25/Research/JP/Covariate_Smoothing/Results/Plot_Data/Raw')
+#data = pd.read_csv('plotting_data.csv')
+data = pd.read_csv('plotting_data_AddH.csv')
+
+for i in range(data.shape[0]):
+
+    print(i/data.shape[0])
+    itera = int(1)
+    p_in_i = round(float(data.loc[i, 'p_increase']), 4)
+    p_out_i = round(float(data.loc[i, 'p_out']), 4)
+    num_groups = int(data.loc[i, 'num_groups'])
+    total_nodes = int(data.loc[i, 'total_nodes'])
+    cat_cont = int(data.loc[i, 'cc'])
+    gamma = round(float(data.loc[i, 'gamma']), 4)
+
+
+    # In[3]:
+
+
+    #p_in_i = .5
+    #p_out_i = 5
+    #itera = 1
+    #p_out = 0.05
+    #p_in = 0.2
+    #cat_cont = 2
+    #total_nodes = 100
+    #gamma = 0.1
+    #num_groups = 2
+    #group_size = 1
+
+
+    # In[5]:
+
+
+    G, X, B_true = Base_functions.Data_generator(num_groups = num_groups, 
+                                  p_in_i = p_in_i, p_out_i = p_out_i, total_nodes = total_nodes, cat_cont = cat_cont)
+
+
+    # In[6]:
+
+
+    G, res, X_colors, node_dis, B, Q, positions =  Base_functions.Vertex_Positions(G = G, step_size = 0.1, thresh = 0.000001, X = X, 
+                                                      gamma = gamma, B_true = B_true, cat_cont = cat_cont)
+
+
+    # In[9]:
+
+    print(positions)
+
+    os.chdir("/home/ot25/Research/JP/Covariate_Smoothing/Results/Plot_Data")
+    
+
+    np.savetxt(str("Nodal_Covariates" + 
+                   "_IT_" + str(itera) +
+                   "_TN_" + str(total_nodes) +
+                   "_NG_" + str(num_groups) +
+                   "_PI_" + str(p_in_i) + 
+                   "_PO_" + str(p_out_i) + 
+                   "_CC_" + str(cat_cont) + 
+                   "_Gamma_" + str(gamma) +
+                   ".csv"), np.insert(X, 0, G.nodes(), axis=1), delimiter=',', comments='') # Inserts Node names in first column
+
+    np.savetxt(str("Nodal_Positions" + 
+                   "_IT_" + str(itera) +
+                   "_TN_" + str(total_nodes) +
+                   "_NG_" + str(num_groups) +
+                   "_PI_" + str(p_in_i) + 
+                   "_PO_" + str(p_out_i) + 
+                   "_CC_" + str(cat_cont) + 
+                   "_Gamma_" + str(gamma) +
+                   ".csv"), np.insert(positions, 0, G.nodes(), axis=1), delimiter=',', comments='')
+
+    nx.write_edgelist(G, str("Edge_List" + 
+                   "_IT_" + str(itera) +
+                   "_TN_" + str(total_nodes) +
+                   "_NG_" + str(num_groups) +
+                   "_PI_" + str(p_in_i) + 
+                   "_PO_" + str(p_out_i) + 
+                   "_CC_" + str(cat_cont) + 
+                   "_Gamma_" + str(gamma) +
+                   ".csv"), delimiter=",", data=False)
+                   
+                   
+ 
+
+
+    # In[ ]:
+
+
+
+
+
+    # In[ ]:
+
+
+
+
+
+    # In[2]:
+
+
+
