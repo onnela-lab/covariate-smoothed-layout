@@ -9,7 +9,6 @@
 import torch
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
-#import math
 import numpy as np
 import random as random
 import numpy.linalg as np_math
@@ -187,13 +186,4 @@ result = np.column_stack((np.round(missing, 4), np.round(diff, 4), np.round(FR_d
 
 os.chdir("/home/ot25/Research/JP/Covariate_Smoothing/Results/Missing_Plot_Data/Raw/Procrustes")
 
-
-#np.savetxt(str("Missing_Results" + 
-#                   "_IT_" + str(int(itera)) +
-#                   "_TN_" + str(int(total_nodes)) +
-#                   "_NG_" + str(int(num_groups)) +
-#                   "_PI_" + str(round(p_in_i, 4)) + 
-#                   "_PO_" + str(round(p_out_i, 4)) + 
-#                   "_CC_" + str(int(cat_cont)) + 
-#                   ".csv"), result, delimiter=',', header = 'Missingness, Us, FR' ,comments='')
 
