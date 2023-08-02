@@ -3,7 +3,9 @@
 
 # In[5]:
 
+################################################################
 # This script runs the algorithm for a particular combination of variables and stores the opitmal gamma
+################################################################
 
 import Base_functions
 import torch
