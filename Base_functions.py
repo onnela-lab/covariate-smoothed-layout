@@ -24,6 +24,15 @@ import os
 
     
 def Q_eval(A, positions, alpha, k, B, gamma): # k is no longer needed here
+    # Constructs the energy function
+
+    # A: Adjacency matrix
+    # positions: Current position matrix
+    # alpha: Repulsive constant
+    # B: Probability matrix
+    # gamma: tuning parameter
+
+    
     sqdist = torch.tril((positions[:, None, :] - positions[None, :, :]).square().sum(axis=-1))
     i, j = np.tril_indices(sqdist.size(0), k=-1)
     sqdist_nozero = sqdist[i, j]
@@ -38,6 +47,13 @@ def Q_eval(A, positions, alpha, k, B, gamma): # k is no longer needed here
     return Q
 
 def B_function(A, X, cat_cont):
+    # Constructs probability matrix
+
+    # A: Adjacency matrix
+    # X: Covariate matrix
+    # cat_cont: data type (1: cat, 2: uniform, 3: normal, 4: full data, 5: school, 6: grade)
+
+    
     # Determining lower diagonal indicies
     i, j = np.tril_indices(A.size(0), k=-1)
     
@@ -130,7 +146,16 @@ def B_function(A, X, cat_cont):
     return B_matrix
      
 def Vertex_Positions(G, step_size, thresh, X, gamma, B_true, cat_cont):
-    # Initial graph
+    # Initiates algorithm and outputs positions
+
+    # G: Graph
+    # step_size: increment for optimization
+    # thresh: convergence tolerence
+    # X: covariate matrix
+    # gamma: tuning parameter
+    # B_true: probability matric
+    # cat_cont: data type (1: cat, 2: uniform, 3: normal, 4: full data, 5: school, 6: grade)
+    
     for iteration in range(1):
         A = torch.tensor(nx.to_scipy_sparse_array(G).todense())
     
@@ -206,22 +231,14 @@ def Vertex_Positions(G, step_size, thresh, X, gamma, B_true, cat_cont):
 
 
 
-def Locate_gamma(data, gammas, metric):
+def Locate_gamma(data, gammas, metric): # metric is no longer needed here
+    # Identifies optimal gamma from simulations
+    
     # data: array containing the metric information for each gammas
     # gammas: gammas to consider
-    # metric to consider
-        # 1: smoothing metric
-        # 2: edge and smoothing metric
-    # Checking for decreasing smoothing trend in the data
-    x = np.array(gammas).reshape((-1, 1))
+    
     y = []
     
-    for gam in gammas:
-        data_gam = data[data[:, 0] == gam, 1]
-        y.append(np.median(data_gam))
-    
-    x2 = sm.add_constant(x)
-    model = sm.OLS(y, x2).fit()
     
     # Finding gamma as minimum of convex fucntion of smoothing and edge increase
     y = []
@@ -236,6 +253,14 @@ def Locate_gamma(data, gammas, metric):
 
 def Data_generator(num_groups, p_in_i, p_out_i, total_nodes, cat_cont):
     # Generates our Network and Covariate Data
+
+    # num_groups: number of groups, if categorical
+    # p_in_i: homophilly level
+    # p_out_i: average degree
+    # total_nodes: total nodes
+    # cat_cont: data type (1: cat, 2: uniform, 3: normal, 4: full data, 5: school, 6: grade)
+    
+    
     if(cat_cont == 1):
         # Calculates weighted probability such that there is an p_in_i increase but avg degree is 5
         group_size = total_nodes/num_groups
@@ -374,6 +399,13 @@ def Data_generator(num_groups, p_in_i, p_out_i, total_nodes, cat_cont):
         
 
 def Gamma_Selector(G, X, B_true, cat_cont):
+    # Runs the alogirhtm several times for varying gamma and automatically exports optimal gamma
+
+    # G: graph
+    # X: covariate matrix
+    # B_true: probability matrix
+    # cat_cont: data type (1: cat, 2: uniform, 3: normal, 4: full data, 5: school, 6: grade)
+    
     iterations = 50
     gammas = np.arange(0.0, 1.05, 0.05)
 
