@@ -1,3 +1,7 @@
+################################################################
+# This script plots our simulated and observed networks
+################################################################
+
 # Loading libraries
 library(dplyr)
 library(igraph)
@@ -8,6 +12,8 @@ library(stringr)
 
 
 Network_plots <- function(real_sim){
+  # sim: simulated data
+  # real: read data
   if(real_sim == "sim"){
     # Identifying data
     setwd("~/Desktop/PyTorch/R/Data/Sim_Plotting_Data")
