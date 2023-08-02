@@ -12,6 +12,10 @@ library(gridExtra)
 
 Procrustes_plots <- function(TN, NG){
   # This function creates the Procrustes plots
+
+  # TN: total nodes
+  # NG: Number of gropus
+  
   setwd("~/Desktop/PyTorch/R/Data/Missing_Plot_Data/Raw/Procrustes")
   
   all_files <- list.files()
