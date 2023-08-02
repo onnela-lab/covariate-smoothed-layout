@@ -3,6 +3,7 @@
 
 # In[ ]:
 
+# This script investigates the robustness of the layout to missing data. 
 
 #!/usr/bin/env python
 # coding: utf-8
