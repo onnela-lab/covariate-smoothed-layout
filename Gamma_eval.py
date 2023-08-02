@@ -26,13 +26,14 @@ import sys
 
 # In[ ]:
 
+# This script runs the algorithm for a particular combination of variables and stores the opitmal gamma
 
 itera = int(sys.argv[1]) # iteration for parameter set
 p_in_i = float(sys.argv[2]) # percent increase
 p_out_i = float(sys.argv[3]) # expected edges per node
 num_groups = int(sys.argv[4])
 total_nodes = int(sys.argv[5])
-cat_cont = int(sys.argv[6]) # 1 catagorical, # 2 logistic continuous # 3 MLE
+cat_cont = int(sys.argv[6]) # data type
 
 
 
