@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+################################################################
 # This script runs the algorithm and saves the recomended nodal coordinates.
-# In[1]:
+################################################################
 
 import Base_functions
 import torch
