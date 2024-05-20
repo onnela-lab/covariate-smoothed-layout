@@ -21,7 +21,7 @@ gamma_table_creator.R: This script pulls the Gamma_eval.py selction data into a 
 ## Visulaization
 gamma_eval.R: This script creates the Gamma_eval.py plots where we see the visuals as a function of gamma.
 
-plotting_code.R: This code visulaizes are simulated and empirical data. 
+plotting_code.R: This code visulaizes simulated and empirical data. 
 
 procrustes_plots.R: This script creates our plots gaging the robustness of our nodal positions. 
 
