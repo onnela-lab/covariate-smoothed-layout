@@ -27,7 +27,7 @@ procrustes_plots.R: This script creates our plots gaging the robustness of our n
 
 
 ## Usage
-Below is a basic example of how to run our algorithm on network with continuous nodal covariates, informative covariates (p_in_i = 1.5), average nodal degree of 5, 100 nodes, and gamma value of 0.5.
+Below is a basic example of how to run our algorithm on a network with continuous nodal covariates, informative covariates (p_in_i = 1.5), average nodal degree of 5, 100 nodes, and gamma value of 0.5.
 
 1. Import the necessary packages/files.
    
