@@ -28,6 +28,7 @@ import os
 
 # In[ ]:
 
+itera = 1
 data = pd.read_csv('plotting_data_AddH.csv')
 
 for i in range(data.shape[0]):
@@ -64,6 +65,7 @@ for i in range(data.shape[0]):
     
 
     np.savetxt(str("Nodal_Covariates" + 
+                   "_IT_" + str(itera) +
                    "_TN_" + str(total_nodes) +
                    "_NG_" + str(num_groups) +
                    "_PI_" + str(p_in_i) + 
@@ -73,6 +75,7 @@ for i in range(data.shape[0]):
                    ".csv"), np.insert(X, 0, G.nodes(), axis=1), delimiter=',', comments='') # Inserts Node names in first column
 
     np.savetxt(str("Nodal_Positions" + 
+                   "_IT_" + str(itera) +
                    "_TN_" + str(total_nodes) +
                    "_NG_" + str(num_groups) +
                    "_PI_" + str(p_in_i) + 
@@ -82,6 +85,7 @@ for i in range(data.shape[0]):
                    ".csv"), np.insert(positions, 0, G.nodes(), axis=1), delimiter=',', comments='')
 
     nx.write_edgelist(G, str("Edge_List" + 
+                   "_IT_" + str(itera) +
                    "_TN_" + str(total_nodes) +
                    "_NG_" + str(num_groups) +
                    "_PI_" + str(p_in_i) + 
