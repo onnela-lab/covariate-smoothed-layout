@@ -76,7 +76,6 @@ FR_base_d = FR_pos_raw
 
 
 # Saving info for visual plots
-os.chdir("/home/ot25/Research/JP/Covariate_Smoothing/Results/Missing_Plot_Data/Raw/Visuals")
 # Other Cases
 for i in range(grid): 
     print(i) 
@@ -180,7 +179,5 @@ for i in range(grid):
     
     
 result = np.column_stack((np.round(missing, 4), np.round(diff, 4), np.round(FR_diff, 4)))
-
-os.chdir("/home/ot25/Research/JP/Covariate_Smoothing/Results/Missing_Plot_Data/Raw/Procrustes")
 
 
