@@ -29,7 +29,7 @@ plotting_code.R: This code visulaizes simulated and empirical data.
 procrustes_plots.R: This script creates our plots gaging the robustness of our nodal positions. 
 
 ## Usage
-Below is a basic example of how to run our algorithm on a network with continuous nodal covariates, informative covariates (p_in_i = 1.5), average nodal degree of 5, 100 nodes, and gamma value of 0.5.
+Below is a basic example of how to run our algorithm on a network with categorical nodal covariates with 3 groups, informative covariates (p_in_i = 1.5), average nodal degree of 5, 99 nodes, and gamma value of 0.5.
 
 1. Import the necessary packages/files.
    
@@ -57,15 +57,15 @@ Below is a basic example of how to run our algorithm on a network with continuou
 3. Generate Data
 
    ```
-   G, X, B_true = Base_functions.Data_generator(num_groups = 0,
-                              p_in_i = 1.5, p_out_i = 5, total_nodes = 100, cat_cont = 2)
+   G, X, B_true = Base_functions.Data_generator(num_groups = 3,
+                              p_in_i = 1.5, p_out_i = 5, total_nodes = 99, cat_cont = 1)
    ```
    
 5. Run algorithm
 
    ```
    G, res, X_colors, node_dis, B, Q, positions = Base_functions.Vertex_Positions(G, step_size = 0.1, thresh = 0.000001, X = X, 
-                                                  gamma = 0.5, B_true = B_true, cat_cont = 2)
+                                                  gamma = 0.5, B_true = B_true, cat_cont = 1)
    ```
 
 7. Plot graph using the exported/configured positions.
