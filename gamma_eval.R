@@ -3,9 +3,12 @@
 # as a function of gamma. 
 ####################################################################
 
-Gamma_Eval <- function(){
+Gamma_Eval <- function(d_file_direc, r_file_direc){
+  # d_file_path: Directory that contains the varying simulated data considering different gammas
+  # r_file_direc: Directory to store the results
+  
   # Identifying data
-  setwd("/Users/octavioustalbot/Desktop/PyTorch/R/Data/Gamma_Eval")
+  setwd(d_file_direc)
   all_files <- list.files()
   
   
@@ -91,7 +94,7 @@ Gamma_Eval <- function(){
     }
   }
   
-  setwd("/Users/octavioustalbot/Desktop/PyTorch/plots")
+  setwd(r_file_direc)
   my_plot <- grid.arrange(grobs = all_plots, nrow = 3, ncol = 4)
   
   ggsave("Gamma_Eval_Select.pdf", 
