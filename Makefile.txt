@@ -1,0 +1,13 @@
+# Define the default target
+.PHONY: all
+all: target
+
+# Define the target for running the Python script
+target:
+	python run_code.py
+
+# Clean up any generated files
+.PHONY: clean
+clean:
+    # No clean-up necessary for this example
+	rm -f plot.png
