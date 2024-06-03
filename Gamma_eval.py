@@ -31,7 +31,8 @@ import sys
 
 G, X, B_true = Base_functions.Data_generator(num_groups = num_groups,
                               p_in_i = p_in_i, p_out_i = p_out_i, total_nodes = total_nodes, cat_cont = cat_cont)
-                              
+
+itera = 1
 iterations = 50
 gammas = np.arange(0.0, 1.05, 0.05)
 
@@ -97,7 +98,7 @@ final = [ [0]*6 for i in range(2)]
 final[0] = ["total_nodes", "num_groups", "p_in", "p_out", "gamma", "cat_cont"]
 final[1] = [int(total_nodes), int(num_groups), round(p_in_i, 2), round(p_out_i, 2), round(gamma,4), int(cat_cont)]
 
-file_name = "_TN_" + str(total_nodes) + "_NG_" + str(num_groups) + "_PI_" + str(round(p_in_i, 4)) + "_PO_" + str(round(p_out_i , 4)) + "_CC_" + str(cat_cont) + ".csv"
+file_name = "IT_" + str(itera) + "_TN_" + str(total_nodes) + "_NG_" + str(num_groups) + "_PI_" + str(round(p_in_i, 4)) + "_PO_" + str(round(p_out_i , 4)) + "_CC_" + str(cat_cont) + ".csv"
 
 if(cat_cont == 1):
 	pd.DataFrame(final).to_csv("/home/ot25/Research/JP/Covariate_Smoothing/Results/Categorical/" + file_name, index = False, header = None)
