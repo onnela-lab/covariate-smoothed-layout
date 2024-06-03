@@ -19,7 +19,7 @@ Missingness_Plots.py: Excecutes data generation for a set level of informative c
 Plot_positions.py: Excecutes data generation for a set level of informative coavariates, runs our algorithm, and stoes the plotting coordinates to be transfered to R.
 
 ## Processing
-gamma_table_creator.R: This script pulls the Gamma_eval.py selction data into a neat table.
+gamma_table_creator.R: This script pulls the Gamma_eval.py selction data into a neat table for our paper.
 
 ## Visulaization
 gamma_eval.R: This script creates the Gamma_eval.py plots where we see the visuals as a function of gamma.
@@ -27,7 +27,6 @@ gamma_eval.R: This script creates the Gamma_eval.py plots where we see the visua
 plotting_code.R: This code visulaizes simulated and empirical data. 
 
 procrustes_plots.R: This script creates our plots gaging the robustness of our nodal positions. 
-
 
 ## Usage
 Below is a basic example of how to run our algorithm on a network with continuous nodal covariates, informative covariates (p_in_i = 1.5), average nodal degree of 5, 100 nodes, and gamma value of 0.5.
