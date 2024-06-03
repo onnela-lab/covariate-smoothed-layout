@@ -28,14 +28,11 @@ import os
 
 # In[ ]:
 
-
-os.chdir('/home/ot25/Research/JP/Covariate_Smoothing/Results/Plot_Data/Raw')
 data = pd.read_csv('plotting_data_AddH.csv')
 
 for i in range(data.shape[0]):
 
     print(i/data.shape[0])
-    itera = int(1)
     p_in_i = round(float(data.loc[i, 'p_increase']), 4)
     p_out_i = round(float(data.loc[i, 'p_out']), 4)
     num_groups = int(data.loc[i, 'num_groups'])
@@ -64,12 +61,9 @@ for i in range(data.shape[0]):
     # In[9]:
 
     print(positions)
-
-    os.chdir("/home/ot25/Research/JP/Covariate_Smoothing/Results/Plot_Data")
     
 
     np.savetxt(str("Nodal_Covariates" + 
-                   "_IT_" + str(itera) +
                    "_TN_" + str(total_nodes) +
                    "_NG_" + str(num_groups) +
                    "_PI_" + str(p_in_i) + 
@@ -79,7 +73,6 @@ for i in range(data.shape[0]):
                    ".csv"), np.insert(X, 0, G.nodes(), axis=1), delimiter=',', comments='') # Inserts Node names in first column
 
     np.savetxt(str("Nodal_Positions" + 
-                   "_IT_" + str(itera) +
                    "_TN_" + str(total_nodes) +
                    "_NG_" + str(num_groups) +
                    "_PI_" + str(p_in_i) + 
@@ -89,7 +82,6 @@ for i in range(data.shape[0]):
                    ".csv"), np.insert(positions, 0, G.nodes(), axis=1), delimiter=',', comments='')
 
     nx.write_edgelist(G, str("Edge_List" + 
-                   "_IT_" + str(itera) +
                    "_TN_" + str(total_nodes) +
                    "_NG_" + str(num_groups) +
                    "_PI_" + str(p_in_i) + 
