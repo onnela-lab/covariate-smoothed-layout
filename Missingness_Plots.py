@@ -30,6 +30,9 @@ from scipy.special import comb
 import Base_functions
 import os
 
+# Can be modified for simulations
+itera = 1
+
 # Generate Data
 G, X, B_true = Base_functions.Data_generator(num_groups = num_groups,
                               p_in_i = p_in_i, p_out_i = p_out_i, total_nodes = total_nodes, cat_cont = cat_cont)
@@ -130,8 +133,8 @@ for i in range(grid):
     
     
     
-    
     np.savetxt(str("Nodal_Covariates" + 
+                   "_IT_" + str(itera) +
                    "_TN_" + str(total_nodes) +
                    "_NG_" + str(num_groups) +
                    "_PI_" + str(p_in_i) + 
@@ -142,6 +145,7 @@ for i in range(grid):
                    ".csv"), np.insert(X, 0, G_1.nodes(), axis=1), delimiter=',', comments='') # Inserts Node names in first column
 
     np.savetxt(str("US_Nodal_Positions" + 
+                   "_IT_" + str(itera) +
                    "_TN_" + str(total_nodes) +
                    "_NG_" + str(num_groups) +
                    "_PI_" + str(p_in_i) + 
@@ -152,6 +156,7 @@ for i in range(grid):
                    ".csv"), np.insert(positions, 0, G_1.nodes(), axis=1), delimiter=',', comments='')
     
     np.savetxt(str("FR_Nodal_Positions" + 
+                   "_IT_" + str(itera) +
                    "_TN_" + str(total_nodes) +
                    "_NG_" + str(num_groups) +
                    "_PI_" + str(p_in_i) + 
@@ -162,6 +167,7 @@ for i in range(grid):
                    ".csv"), np.insert(FR_pos_raw, 0, G_1.nodes(), axis=1), delimiter=',', comments='')
 
     nx.write_edgelist(G_1, str("Edge_List" + 
+                   "_IT_" + str(itera) +
                    "_TN_" + str(total_nodes) +
                    "_NG_" + str(num_groups) +
                    "_PI_" + str(p_in_i) + 
