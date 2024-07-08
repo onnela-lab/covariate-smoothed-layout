@@ -10,7 +10,7 @@ requirements.txt contains a list of packages that need to be installed
 ## Core Functions
 Base_functions.py: main class of functions to generate our data, contruct our energy function, optimize our energy function, and select our tuning parameter.
 
-run_code.py: Single line of code to generate results.
+Makefile.txt: Single line of code to generate results.
 
 ## Data Generation
 
