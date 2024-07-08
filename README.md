@@ -31,7 +31,9 @@ plotting_code.R: This code visulaizes simulated and empirical data.
 procrustes_plots.R: This script creates our plots gaging the robustness of our nodal positions. 
 
 ## Usage
-Below is a basic example of how to run our algorithm on a network with categorical nodal covariates with 3 groups, informative covariates (p_in_i = 1.5), average nodal degree of 5, 99 nodes, and gamma value of 0.5. The code can also be ran by running the following code in the terminal after downloading the needed files: 'make -f Makefile.txt'
+Below is a basic example of how to run our algorithm on a network with categorical nodal covariates with 3 groups, informative covariates, 2.5:1 odds off connection within verses between, (p_in_i = 1.5), average nodal degree of 5, 99 nodes, and gamma value of 0.5. The code can also be ran by running the following code in the terminal after downloading the needed files: 'make -f Makefile.txt'
+
+The calculated within and between connection probabilities are printed on the screen as well as written here respectively rounded to 4 digits: 0.0847, 0.0339.
 
 1. Import the necessary packages/files.
    
