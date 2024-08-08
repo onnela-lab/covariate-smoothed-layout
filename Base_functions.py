@@ -297,7 +297,7 @@ def Data_generator(num_groups, p_in_i, p_out_i, total_nodes, cat_cont):
                     B_true[i, j] = p_out
                 #print(i, j, B_true[i,j], X[i], X[j])
     elif(cat_cont == 2):
-        B_1 = -p_in_i
+        B_1 = -np.log(p_in_i)
 
         # Define the function to integrate
         def f(z, b_0, b_1 = B_1):
