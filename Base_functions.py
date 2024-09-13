@@ -272,7 +272,7 @@ def Data_generator(num_groups, p_in_i, p_out_i, total_nodes, cat_cont):
         n_wg = num_groups*comb(group_size, 2)
         n_bg = comb(total_nodes, 2) - n_wg
 
-        p_out = (p_out_i/total_nodes)*(n_wg + n_bg)/(n_wg*(1 + p_in_i) + n_bg)
+        p_out = (p_out_i/(total_nodes - 1))*(n_wg + n_bg)/(n_wg*(1 + p_in_i) + n_bg)
         p_in = p_out + p_in_i*p_out
         
         print(p_out, p_in)
