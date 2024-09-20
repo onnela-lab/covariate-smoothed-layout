@@ -302,7 +302,7 @@ def Data_generator(num_groups, p_in_i, p_out_i, total_nodes, cat_cont):
                 #print(i, j, B_true[i,j], X[i], X[j])
     elif(cat_cont == 2):
         B_1 = -np.log(p_in_i)
-        print(f"The B_1 value is: {B_1:.2f}")
+        
 
         # Define the function to integrate
         def f(z, b_0, b_1 = B_1):
@@ -319,6 +319,7 @@ def Data_generator(num_groups, p_in_i, p_out_i, total_nodes, cat_cont):
 
 
         B_0 = sol.root
+        print(f"The B_0 value is: {B_0:.2f}")
 
 
         G = nx.empty_graph(total_nodes)
