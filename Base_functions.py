@@ -308,7 +308,7 @@ def Data_generator(num_groups, p_in_i, p_out_i, total_nodes, cat_cont):
         # Define the function to solve for
         def Q(b_0):
         # integral minus average degree
-            return quad(f, a=0, b=1, args=(b_0))[0] - p_out_i/(total_nodes - 1)
+            return quad(f, a=0, b=1, args=(b_0))[0] - p_out_i/(total_nodes)
 
 
         sol = root_scalar(Q, x0= (1.0), x1 = (0.0))
