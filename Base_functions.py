@@ -25,6 +25,7 @@ from scipy.integrate import quad
 from sklearn.preprocessing import LabelEncoder
 import sys
 import os
+import math
 
     
 def Q_eval(A, positions, alpha, k, B, gamma): # k is no longer needed here
@@ -267,7 +268,7 @@ def Data_generator(num_groups, p_in_i, p_out_i, total_nodes, cat_cont):
     
     if(cat_cont == 1):
         # Calculates weighted probability such that there is an p_in_i increase but avg degree is 5
-        group_size = total_nodes/num_groups
+        group_size = math.floor(total_nodes/num_groups)
 
         n_wg = num_groups*comb(group_size, 2)
         n_bg = comb(total_nodes, 2) - n_wg
