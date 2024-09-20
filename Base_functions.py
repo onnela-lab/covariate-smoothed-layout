@@ -278,7 +278,8 @@ def Data_generator(num_groups, p_in_i, p_out_i, total_nodes, cat_cont):
         #p_in = p_out + p_in_i*p_out
         p_in = p_in_i*p_out
         
-        print(p_out, p_in)
+        print(f"The between group probability is: {p_out:.2f}")
+        print(f"The within group probability is: {p_in:.2f}")
         
         #random.seed(10)
         G = nx.planted_partition_graph(int(num_groups), int(group_size), p_in, p_out)
@@ -301,6 +302,7 @@ def Data_generator(num_groups, p_in_i, p_out_i, total_nodes, cat_cont):
                 #print(i, j, B_true[i,j], X[i], X[j])
     elif(cat_cont == 2):
         B_1 = -np.log(p_in_i)
+        print(f"The B_1 value is: {B_1:.2f}")
 
         # Define the function to integrate
         def f(z, b_0, b_1 = B_1):
