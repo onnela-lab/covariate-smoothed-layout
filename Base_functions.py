@@ -400,8 +400,9 @@ def Data_generator(num_groups, p_in_i, p_out_i, total_nodes, cat_cont):
         X = X.astype(int)
             
         B_true = [] # There is no B_ture to use on real data
-        
-        
+
+    avg_degree = sum(dict(G.degree()).values()) / G.number_of_nodes()
+    print(f"The average degree of the network is: {avg_degree:.2f}")
     return G, X, B_true
         
 
